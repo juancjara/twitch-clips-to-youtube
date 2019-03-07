@@ -101,6 +101,7 @@ const gg = async requestData => {
 };
 
 //20 = game
+/*
 gg({
   params: { part: 'snippet,status' },
   properties: {
@@ -116,3 +117,4 @@ gg({
   },
   mediaFilename: 'tmp/compilation_1551655079134.mp4'
 });
+*/

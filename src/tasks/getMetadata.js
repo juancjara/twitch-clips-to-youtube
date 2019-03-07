@@ -1,8 +1,8 @@
 const fs = require('fs');
 const VideoLib = require('node-video-lib');
 
-const getMetadata = path => {
-  return new Promise((resolve, reject) => {
+const getMetadata = path =>
+  new Promise((resolve, reject) => {
     fs.open(path, 'r', function(err, fd) {
       try {
         let movie = VideoLib.MP4Parser.parse(fd);
@@ -18,6 +18,5 @@ const getMetadata = path => {
       }
     });
   });
-};
 
 module.exports = getMetadata;

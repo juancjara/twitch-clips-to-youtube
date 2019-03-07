@@ -44,7 +44,7 @@ const createOne = async (req, res) => {
   );
 
   //update status
-  const res = await uploadVideo({
+  const response = await uploadVideo({
     title,
     description,
     tags,

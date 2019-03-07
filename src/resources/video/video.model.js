@@ -5,7 +5,7 @@ const videoSchema = new mongoose.Schema(
     error: String,
     clips: [
       {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Clip'
       }
     ],
