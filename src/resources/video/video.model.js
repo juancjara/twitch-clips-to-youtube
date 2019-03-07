@@ -43,13 +43,12 @@ const videoSchema = new mongoose.Schema(
       type: String,
       trim: true
     },
-    game: {
+    resolution: {
       type: String,
-      required: true,
       trim: true
     }
   },
   { timestamp: true }
 );
 
-module.exports.Video = mongoose.model('video', videoSchema);
+module.exports = mongoose.model('video', videoSchema);
