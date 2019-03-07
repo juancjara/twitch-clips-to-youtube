@@ -1,13 +1,17 @@
 var fs = require('fs');
 var readline = require('readline');
-var {google} = require('googleapis');
+var { google } = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/youtube-nodejs-quickstart.json
-var SCOPES = ['https://www.googleapis.com/auth/youtube.readonly', 'https://www.googleapis.com/auth/youtube.upload', 'https://www.googleapis.com/auth/youtube.upload'];
-var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
-    process.env.USERPROFILE) + '/.credentials/';
+var SCOPES = [
+  'https://www.googleapis.com/auth/youtube.readonly',
+  'https://www.googleapis.com/auth/youtube.upload',
+  'https://www.googleapis.com/auth/youtube.upload'
+];
+var TOKEN_DIR =
+  (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'youtube-nodejs-quickstart.json';
 
 // Load client secrets from a local file.
@@ -16,7 +20,7 @@ fs.readFile('client_secret.json', function processClientSecrets(err, content) {
     console.log('Error loading client secret file: ' + err);
     return;
   }
-  console.log(JSON.parse(content))
+  console.log(JSON.parse(content));
   // Authorize a client with the loaded credentials, then call the YouTube API.
   authorize(JSON.parse(content), getChannel);
 });
@@ -90,7 +94,7 @@ function storeToken(token) {
       throw err;
     }
   }
-  fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+  fs.writeFile(TOKEN_PATH, JSON.stringify(token), err => {
     if (err) throw err;
     console.log('Token stored to ' + TOKEN_PATH);
   });
@@ -104,24 +108,28 @@ function storeToken(token) {
  */
 function getChannel(auth) {
   var service = google.youtube('v3');
-  service.channels.list({
-    auth: auth,
-    part: 'snippet,contentDetails,statistics',
-    forUsername: 'GoogleDevelopers'
-  }, function(err, response) {
-    if (err) {
-      console.log('The API returned an error: ' + err);
-      return;
+  service.channels.list(
+    {
+      auth: auth,
+      part: 'snippet,contentDetails,statistics',
+      forUsername: 'GoogleDevelopers'
+    },
+    function(err, response) {
+      if (err) {
+        console.log('The API returned an error: ' + err);
+        return;
+      }
+      var channels = response.data.items;
+      if (channels.length == 0) {
+        console.log('No channel found.');
+      } else {
+        console.log(
+          "This channel's ID is %s. Its title is '%s', and " + 'it has %s views.',
+          channels[0].id,
+          channels[0].snippet.title,
+          channels[0].statistics.viewCount
+        );
+      }
     }
-    var channels = response.data.items;
-    if (channels.length == 0) {
-      console.log('No channel found.');
-    } else {
-      console.log('This channel\'s ID is %s. Its title is \'%s\', and ' +
-                  'it has %s views.',
-                  channels[0].id,
-                  channels[0].snippet.title,
-                  channels[0].statistics.viewCount);
-    }
-  });
+  );
 }

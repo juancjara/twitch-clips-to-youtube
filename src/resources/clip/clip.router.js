@@ -1,9 +1,9 @@
-const express = require('express')
+const express = require('express');
 
-const controllers = require('./clip.controllers')
+const controllers = require('./clip.controllers');
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/:date', controllers.getMany)
+router.get('/:date', controllers.getMany);
 
 module.exports = router;

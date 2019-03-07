@@ -45,29 +45,43 @@ api.clientID = process.env.TWITCH_CLIENT_ID;
       'https://clips-media-assets2.twitch.tv/AT-cm%7C411215548-preview-86x45.jpg' } }
   */
 
-const getClips = async (filters = {}) => 
-        new Promise((resolve, reject) => {
-            api.clips.top({
-                limit: 30,
-                ...filters
-            }, (err, res) => {
-                if (err) return reject(err)
-                const formmatedClips = res.clips.map(({ tracking_id, url, embed_url, broadcaster, curator, title, thumbnails: { tiny }, views, duration, created_at }) => (
-                    {
-                        title,
-                        id: tracking_id,
-                        channel: broadcaster.name,
-                        creator: curator.name,
-                        url,
-                        embedUrl: embed_url,
-                        views,
-                        duration,
-                        createdAt: created_at,
-                        videoUrl: tiny.replace(/-preview.*/g, '.mp4')
-                    }
-                ))
-                resolve(formmatedClips)
-            })
-        })
+const getClips = async (filters = {}) =>
+  new Promise((resolve, reject) => {
+    api.clips.top(
+      {
+        limit: 30,
+        ...filters
+      },
+      (err, res) => {
+        if (err) return reject(err);
+        const formmatedClips = res.clips.map(
+          ({
+            tracking_id,
+            url,
+            embed_url,
+            broadcaster,
+            curator,
+            title,
+            thumbnails: { tiny },
+            views,
+            duration,
+            created_at
+          }) => ({
+            title,
+            id: tracking_id,
+            channel: broadcaster.name,
+            creator: curator.name,
+            url,
+            embedUrl: embed_url,
+            views,
+            duration,
+            createdAt: created_at,
+            videoUrl: tiny.replace(/-preview.*/g, '.mp4')
+          })
+        );
+        resolve(formmatedClips);
+      }
+    );
+  });
 
-module.exports = getClips
+module.exports = getClips;
