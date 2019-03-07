@@ -1,0 +1,32 @@
+{
+  "name": "twitch-clips",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "fluent-ffmpeg": "^2.1.2",
+    "google-auth-library": "^3.1.0",
+    "googleapis": "^37.2.0",
+    "mongodb": "^3.1.13",
+    "mongoose": "^5.4.17",
+    "morgan": "^1.9.1",
+    "node-video-lib": "^2.1.5",
+    "twitch-api-v5": "^2.0.4",
+    "videoshow": "^0.1.11"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
