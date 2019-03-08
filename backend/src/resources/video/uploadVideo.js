@@ -34,7 +34,10 @@ const uploadVideo = async ({ title, description, tags, path }) =>
             categoryId: GAME_CATEGORY_ID,
             defaultLanguage: 'en',
             description,
-            tags,
+            tags: tags
+              .split(',')
+              .map(s => s.trim())
+              .filter(s => s),
             title
           },
           status: {
@@ -53,9 +56,7 @@ const uploadVideo = async ({ title, description, tags, path }) =>
             url: `https://youtu.be/${data.data.id}`
           });
         }
-        process.exit();
       });
-      var fileSize = fs.statSync(path).size;
     } catch (e) {
       reject(e);
     }

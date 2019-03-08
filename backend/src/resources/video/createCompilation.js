@@ -17,7 +17,6 @@ const createCompilation = async ({ paths, resolution, date }) =>
         }:v=1:a=1[v][a]`
       );
       args = args.concat(['-map', '[v]', '-map', '[a]', destPath]);
-      console.log(args);
       const ffmpeg = spawn('ffmpeg', args);
       ffmpeg.stdout.on('data', data => {
         console.log(data.toString());
@@ -28,7 +27,6 @@ const createCompilation = async ({ paths, resolution, date }) =>
       });
       ffmpeg.on('exit', () => resolve(destPath));
     } catch (e) {
-      console.log(e);
       reject(e);
     }
   });

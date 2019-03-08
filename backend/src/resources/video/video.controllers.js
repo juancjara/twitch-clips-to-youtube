@@ -26,7 +26,7 @@ const createOne = async (req, res) => {
 
     const video = await Video.create({
       resolution,
-      clips,
+      clips: clips.map(clip => clip.id),
       day,
       title,
       description,
@@ -35,18 +35,13 @@ const createOne = async (req, res) => {
     res.status(201).json({ data: video });
 
     const outputPath = await createCompilation({
-      paths: clips.map(id => `tmp/${id}.mp4`),
-      date: req.body.date,
+      paths: clips.map(clip => `tmp/${clip.twitchId}.mp4`),
+      date: day,
       resolution: req.body.resolution
     });
-    await Video.findOneAndUpdate(
-      {
-        _id: video._id
-      },
-      {
-        status: 'uploading'
-      }
-    );
+    await Video.findByIdAndUpdate(video._id, {
+      status: 'uploading'
+    });
 
     const youtubeVideo = await uploadVideo({
       title,
@@ -54,16 +49,11 @@ const createOne = async (req, res) => {
       tags,
       path: outputPath
     });
-    await Video.findOneAndUpdate(
-      {
-        _id: video._id
-      },
-      {
-        status: 'completed',
-        youtubeVideoId: youtubeVideo.id,
-        youtubeVideoUrl: youtubeVideo.url
-      }
-    );
+    await Video.findByIdAndUpdate(video._id, {
+      status: 'completed',
+      youtubeVideoId: youtubeVideo.id,
+      youtubeVideoUrl: youtubeVideo.url
+    });
   } catch (e) {
     console.log(e);
     res.status(400).end();
