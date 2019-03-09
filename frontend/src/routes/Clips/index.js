@@ -3,6 +3,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 
 import CreateVideo from './CreateVideo';
 import Clip from '../../components/Clip';
@@ -24,7 +25,12 @@ class Clips extends React.Component {
           clips
         });
       })
-      .catch(e => console.log(e));
+      .catch(e => {
+        console.log(e);
+        this.setState({
+          loading: false
+        });
+      });
   }
   onPick = id => {
     const { selection } = this.state;
@@ -36,6 +42,8 @@ class Clips extends React.Component {
   render() {
     const { loading, clips, selection } = this.state;
     if (loading) return <CircularProgress />;
+    if (!clips.length)
+      return <Typography color="primary">List is empty for {getDate()}</Typography>;
     const selectedClips = clips.filter(clip => selection[clip._id]);
     return (
       <List>
