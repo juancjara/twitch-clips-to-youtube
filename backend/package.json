@@ -15,9 +15,12 @@
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "express-jwt": "^5.3.1",
     "googleapis": "^37.2.0",
+    "jwks-rsa": "^1.4.0",
     "mongoose": "^5.4.17",
     "morgan": "^1.9.1",
+    "node-video-lib": "^2.1.5",
     "prettier": "^1.16.4",
     "twitch-api-v5": "^2.0.4",
     "videoshow": "^0.1.11"
